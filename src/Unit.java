@@ -81,6 +81,10 @@ public abstract class Unit implements Cloneable{
         character.set(5, Integer.toString(defense));
         character.set(2, Integer.toString(health));
     }
+    public void addFines(String symbol, double znach)
+    {
+        fines.put(symbol,znach);
+    }
 
 
     public void addFine(String s, double cost)

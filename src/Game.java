@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 public class Game extends TablePrint {
@@ -277,22 +281,10 @@ public class Game extends TablePrint {
         int money = wallet.getMoney();
         int dificulty;
         int size;
-        System.out.print("Добро пожаловать в NiceVillage\nНа нашу деревнюceh произошло нападение, и только ты в силах спасти тысячи мирных жителей!\nУровни сложность игры:\nлегкий - 1\nсредний - 2\nсложный - 3\nМой уровень - ");
         Scanner scanner = new Scanner(System.in);
-        dificulty = scanner.nextInt();
-        switch (dificulty) {
-            case 1:
-                size = 3;
-                break;
-            case 2:
-                size = 5;
-                break;
-            case 3:
-                size = 7;
-                break;
-            default:
-                size=3;
-        }
+        System.out.println("Добро пожаловать в NiceVillage\nНа нашу деревнюceh произошло нападение, и только ты в силах спасти тысячи мирных жителей!\n");
+
+
         System.out.println("На вашем счету " + money + " монет\nПоочередно выбери воинов в свою армию");
         ArrayList<Unit> shop = new ArrayList<>();
         FootSoldier p1 = new FootSoldier("Мечник", "1", 50, 5, 1, 8, 3, 10,1.5,2.0,1.2);
@@ -331,8 +323,7 @@ public class Game extends TablePrint {
             wallet.setMoney(money);
             generateUnit(shop,t,myPlayers,index);
             myNumberPlayers.add(myPlayers.get(index).getNumber());
-            myPlayers.get(index).setxCoord(index);
-            myPlayers.get(index).setyCoord(size-1);
+
             System.out.println("Воин " + myPlayers.get(index).getName() + " вступил в армию");
             index++;
             System.out.println("На вашем счету "+money+" монет");
@@ -350,7 +341,7 @@ public class Game extends TablePrint {
             botPlayers.get(i).setyCoord(0);
             index2++;
         }
-        Alpaka alpaka=new Alpaka(random.nextInt(size),random.nextInt(size-2)+1);
+
 
         ArrayList<Building> myBuildings=new ArrayList<>();
         ArrayList<BuildingNotLevelUp> myBuildingsNotLEvelUp=new ArrayList<>();
@@ -378,10 +369,107 @@ public class Game extends TablePrint {
         shopBuildings.add((Building) forge);
         shopBuildings.add((Building) arcenal);
 
-        Field field = new Field(size, myNumberPlayers, botSymbolPlayers);
+
+
+
+        Field field = new Field(myNumberPlayers, botSymbolPlayers);
+        File finesFile =new File("C:\\Users\\Пользователь\\IdeaProjects\\untitled\\barriers.txt");
+        try {
+            BufferedReader bufferedReader5=new BufferedReader(new FileReader("C:\\Users\\Пользователь\\IdeaProjects\\untitled\\barriers.txt"));
+            String lineInFile;
+            int indexChetn=0;
+            String symbolOfNewFine="";
+            Double znach=0.0;
+            while ((lineInFile=bufferedReader5.readLine())!=null)
+            {
+                if(indexChetn%2==0)
+                    symbolOfNewFine=lineInFile;
+                else {
+                    znach=Double.parseDouble(lineInFile);
+                }
+                indexChetn++;
+                for (int i=0;i<myPlayers.size();i++)
+                    myPlayers.get(i).addFine(symbolOfNewFine,znach);
+                for (int i=0;i<botPlayers.size();i++)
+                    botPlayers.get(i).addFine(symbolOfNewFine,znach);
+                field.addSymbol(symbolOfNewFine);
+            }
+            bufferedReader5.close();
+        }catch (IOException e)
+        {
+            System.out.println("Невозможно открыть файл");
+        }
+
+
+        System.out.print("\n\nВы хотите использовать\n 1 - раннее созданную карту\n 2 - сгенерировать ее\n Ваш выбор -  ");
+        int choice2 =scanner.nextInt();
+        switch (choice2)
+        {
+            case 1:
+            {
+                File nfile =new File("C:\\Users\\Пользователь\\IdeaProjects\\untitled\\allMaps.txt");
+                try {
+                    BufferedReader bufferedReader=new BufferedReader(new FileReader("C:\\Users\\Пользователь\\IdeaProjects\\untitled\\allMaps.txt"));
+                    String line;
+                    System.out.println("Доступные файлы :");
+                    while ((line=bufferedReader.readLine())!=null)
+                        System.out.println(line);
+                    bufferedReader.close();
+                }catch (IOException e)
+                {
+                    System.out.println("Невозможно открыть файл");
+                }
+                System.out.print("Ваш выбор - ");
+                Scanner scanner1 = new Scanner(System.in);
+                String fileToOpen=scanner1.nextLine();
+                field.fillBasicFieldFromFile(myNumberPlayers, botSymbolPlayers,fileToOpen);
+                size=field.getxSize();
+
+                break;
+            }
+            case 2:
+            {
+                System.out.print("Уровни сложность игры:\nлегкий - 1\nсредний - 2\nсложный - 3\nМой уровень - ");
+                dificulty = scanner.nextInt();
+                switch (dificulty) {
+                    case 1:
+                        size = 3;
+                        break;
+                    case 2:
+                        size = 5;
+                        break;
+                    case 3:
+                        size = 7;
+                        break;
+                    default:
+                        size=3;
+                }
+                field.fillBasicField(size, myNumberPlayers, botSymbolPlayers);
+                field.setSize(size);
+                break;
+            }
+            default:
+                size=3;
+
+        }
+        for (int i=0;i<myPlayers.size();i++)
+        {
+            myPlayers.get(i).setxCoord(i);
+            myPlayers.get(i).setyCoord(size-1);
+        }
+        Alpaka alpaka=new Alpaka(random.nextInt(size),random.nextInt(size-2)+1);
+
+
         field.changeBasicField(alpaka.getxCoord(),alpaka.getyCoord(),"$");
         int squirrelKoef=random.nextInt(1);
         int indexBattle=0;
+
+
+
+
+
+
+
         while (true) {
             if (botPlayers.isEmpty()){
                 System.out.println("Игра окончена\nВы одержали победу");
