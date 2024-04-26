@@ -1,8 +1,19 @@
-public class Wallet {
+import java.io.Serializable;
+
+public class Wallet implements Serializable {
     private int stone;
     private int tree;
     private int money;
     private int numperOfCraft=0;
+    private int wool;
+
+    public int getWool() {
+        return wool;
+    }
+
+    public void setWool(int wool) {
+        this.wool = wool;
+    }
 
     public int getNumperOfCraft() {
         return numperOfCraft;
@@ -13,14 +24,15 @@ public class Wallet {
     }
 
 
-    public Wallet(int money, int stone, int tree) {
+    public Wallet(int money, int stone, int tree, int wool) {
         this.stone = stone;
         this.money=money;
         this.tree=tree;
+        this.wool=wool;
     }
 
     public void balance(){
-        System.out.println("\n\n\nВаш Баланс\n Камень - "+stone+" шт\n Дерево - "+tree+" шт\n Монеты - "+ money+"\n");
+        System.out.println("\n\n\nВаш Баланс\n Камень - "+stone+" шт\n Дерево - "+tree+" шт\n Монеты - "+ money+"\n Шерсть - "+ wool);
     }
 
     public int getStone() {

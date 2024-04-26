@@ -1,8 +1,10 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-abstract public class BuildingNotLevelUp {
+abstract public class BuildingNotLevelUp implements Serializable {
 
+    private final static String S="Нельзя";
     protected String name;
     protected int costInStoneBuy;
     protected int costInTreeBuy;
@@ -16,9 +18,9 @@ abstract public class BuildingNotLevelUp {
         property.add(name);
         property.add(Integer.toString(costInStoneBuy));
         property.add(Integer.toString(costInTreeBuy));
-        property.add("Нельзя");
-        property.add("Нельзя");
-        property.add("Нельзя");
+        property.add(S);
+        property.add(S);
+        property.add(S);
     }
     public void useBuilding(Wallet wallet)
     {

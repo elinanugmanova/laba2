@@ -1,7 +1,9 @@
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-abstract public class Building {
+abstract public class Building implements Serializable {
+    private final static String S="НЕЛЬЗЯ";
     protected int level=0;
     protected String name;
     protected int costInStoneBuy;
@@ -11,14 +13,14 @@ abstract public class Building {
     public ArrayList<String> property=new ArrayList<>();
 
 
-    protected abstract void Characteristic(ArrayList<Unit> myUnit);
-    public void levelUp(ArrayList<Unit> myUnit)
+    protected abstract void Characteristic(Wallet wallet, ArrayList<Unit> myUnit);
+    public void levelUp(Wallet wallet, ArrayList<Unit> myUnit)
     {
-        Characteristic(myUnit);
+        Characteristic(wallet, myUnit);
         level+=1;
         System.out.println("Уровень здания - "+level);
     }
-    public Building(ArrayList<Unit> myUnit, String name, int costInStoneBuy, int costInTreeBuy, int costInStoneLevel, int costInTreeLevel) {
+    public Building(Wallet wallet, ArrayList<Unit> myUnit, String name, int costInStoneBuy, int costInTreeBuy, int costInStoneLevel, int costInTreeLevel) {
         this.costInStoneBuy=costInStoneBuy;
         this.costInTreeBuy=costInTreeBuy;
         this.costInStoneLevel=costInStoneLevel;
@@ -54,5 +56,9 @@ abstract public class Building {
 
     public String getName() {
         return name;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 }

@@ -1,4 +1,6 @@
-public class Craft extends BuildingNotLevelUp{
+import java.io.Serializable;
+
+public class Craft extends BuildingNotLevelUp implements Serializable {
     private boolean isHasTakenMoney;
     @Override
     protected void Do(Wallet wallet){

@@ -27,6 +27,7 @@ public class Field extends TablePrint{
                     basicField.get(i).set(t,unit.getNumber());
                     unit.setxCoord(t);
                     unit.setyCoord(i);
+                    System.out.println(unit.getyCoord());
                     k=true;
                     break;
                 }

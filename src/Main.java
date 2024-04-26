@@ -12,8 +12,6 @@ public class Main {
 //        ArrayList<Building> k1=new ArrayList<Building>();
 //        Arcenal a=new Arcenal(k,"sd",1,2,3,4)
 
-
-        System.out.println(1.8-0.5);
         Game game = new Game();
         game.start();
     }

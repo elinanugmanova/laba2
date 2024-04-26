@@ -1,6 +1,8 @@
+import javax.sql.rowset.serial.SerialRef;
+import java.io.Serializable;
 import java.util.*;
 
-public abstract class Unit implements Cloneable{
+public abstract class Unit implements Cloneable, Serializable {
     private int health;
     private int attack;
     private int rangeAttack;
@@ -35,10 +37,21 @@ public abstract class Unit implements Cloneable{
         this.fines = fines;
     }
 
+    public void decrementFinesSwam(double decrement)
+    {
+
+        if ((fines.get("#")-decrement)<=0)
+            fines.put("#",0.0);
+        else
+            fines.put("#",Math.ceil((fines.get("#")-decrement) * 10) / 10);
+
+    }
+
     public void decrementFines(double decrement)
     {
         for (String key: fines.keySet())
         {
+
             if ((fines.get(key)-decrement)<=0)
                 fines.put(key,0.0);
             else
@@ -85,6 +98,8 @@ public abstract class Unit implements Cloneable{
     {
         fines.put(symbol,znach);
     }
+
+
 
 
     public void addFine(String s, double cost)
@@ -203,6 +218,7 @@ public abstract class Unit implements Cloneable{
 
     public void setCost(int cost) {
         this.cost = cost;
+        character.set(7,Integer.toString(cost));
     }
     public void printUnit(){
         System.out.println(name+" "+number+" "+xCoord+" "+yCoord);

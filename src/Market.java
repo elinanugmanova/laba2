@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Market extends BuildingNotLevelUp{
+public class Market extends BuildingNotLevelUp implements Serializable {
 
     @Override
     protected void Do(Wallet wallet){
